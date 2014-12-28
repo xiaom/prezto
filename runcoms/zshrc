@@ -11,3 +11,64 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+alias vi='/Applications/MacVim.app/Contents/MacOS/Vim'
+alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+. `brew --prefix`/etc/profile.d/z.sh
+# function precmd () {
+#   _z --add "$(pwd -P)"
+# }
+export EDITOR="vim"
+PATH=/usr/local/bin:$PATH   # overwrite system's binary command e.g., git...
+PATH=/usr/texbin:$PATH
+PATH=/Applications/Postgres.app/Contents/Versions/9.3/bin:$PATH # postgres
+PATH=$HOME/anaconda/bin:$PATH # python related
+PATH=~/Dropbox/gadgets/texchecker:~/Dropbox/gadgets:$PATH # small tools
+PATH=/opt/drill/drill-scripts:$PATH # DRILL related
+PATH=/opt/hive/scripts:$PATH
+export PATH
+export DRCLI=$HOME'/drill-workspace/incubator-drill/contrib/native/client'
+export DR=$HOME'/drill-workspace/incubator-drill/'
+export DE=$HOME'/Dropbox/projects/depth-exam'
+export DRPostgres=$HOME'/drill-workspace/incubator-drill/contrib/storage-postgres/src/main/java/org/apache/drill/exec/store/postgres'
+export HS2=$HOME'/hive-workspace/hive/service/src/java/org/apache/hive/service/server'
+export DCUBE=$HOME'/Dropbox/Projects/domcube-src'
+alias pt='pivotal_tools'
+export VISUAL=vim
+
+# ---------------------------------------------------------
+# Remove duplicate applications in 'Open With'
+alias CleanDupOpenWith="/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
+
+# http://www.makeuseof.com/tag/these-6-awesome-terminal-commands-will-boost-your-macbook/
+# Kill the dashboard
+alias ShowDock="defaults write com.apple.dashboard mcx-disabled -boolean YES && killall Dock"
+alias HideDock="defaults write com.apple.dashboard mcx-disabled -boolean NO && killall Dock"
+alias HideDesktopIcons="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias ShowDesktopIcons="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+alias HideApptivateMenuBar="defaults write se.cocoabeans.apptivate TAShowStatusbarIcon 0"
+# Disable a service `sudo launchctl unload -w /Library/LaunchDaemons/com.foundationdb.fdbmonitor.plist`
+alias ShowIP="ifconfig en0 | awk '/inet / {print $2}'"
+alias TurnOffSpotlight="sudo mdutil -a -i off"
+alias TurnOnSpotlight="sudo mdutil -a -i on"
+
+alias DisableAWDL="ifconfig awdl0 down"
+
+
+# -- QuickLook:
+# qlmanage -p FILE_PATH
+# -------------------------------
+# HADOOP and JAVA related setting
+# -------------------------------
+# overcome the following error related “SCDynamicStore”, expecially “Unable to load realm info from SCDynamicStore”
+export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+#export HIVE_HOME=/usr/local/Cellar/hive/0.13.0/libexec
+#export HCAT_HOME=/usr/local/Cellar/hive/0.13.0/libexec/hcatalog
+export HADOOP_OPTS="-Djava.security.krb5.realm=OX.AC.UK -Djava.security.krb5.kdc=kdc0.ox.ac.uk:kdc1.ox.ac.uk"
+# ------------------
+# ENV by Boot2Docker
+# ------------------
+export DOCKER_HOST=tcp://192.168.59.103:2376
+export DOCKER_CERT_PATH=/Users/xiaom/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
+
