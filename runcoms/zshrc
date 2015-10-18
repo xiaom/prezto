@@ -23,9 +23,9 @@ typeset -U path
 path=($HOME/bin
     $HOME/anaconda/bin
     /usr/local/bin
-    /usr/texbin
+    /Library/TeX/texbin
     $path)
-export PATH
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin:$HOME/Library/Haskell/bin
 export EDITOR=vim
 export VISUAL=vim
 
@@ -38,6 +38,7 @@ export HV=$HOME'/hive-workspace/hive'
 export HS2D=$HOME'/hive-workspace/hs2driver'
 export HS2=$HOME'/hive-workspace/hive/service/src/java/org/apache/hive/service/server'
 export DCUBE=$HOME'/Dropbox/Projects/domcube-src'
+export HS2HOME=/Users/xiaom/hive-workspace/hive/packaging/target/apache-hive-2.0.0-SNAPSHOT-bin/apache-hive-2.0.0-SNAPSHOT-bin
 
 # Alias for OS X Management
 # =========================
@@ -56,6 +57,7 @@ alias ShowIP="ifconfig en0 | awk '/inet / {print $2}'"
 alias TurnOffSpotlight="sudo mdutil -a -i off"
 alias TurnOnSpotlight="sudo mdutil -a -i on"
 alias DisableAWDL="ifconfig awdl0 down"
+alias GenRandMac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
 
 # - QuickLook:
 # qlmanage -p FILE_PATH
@@ -64,7 +66,7 @@ alias DisableAWDL="ifconfig awdl0 down"
 # ==============
 alias vi='/Applications/MacVim.app/Contents/MacOS/Vim'
 alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
-alias emacs='open -a /Applications/Emacs'
+alias em='open -a Emacs'
 alias gl='git lg | less'
 
 
@@ -73,6 +75,7 @@ alias gl='git lg | less'
 # ------
 export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
 export SCALA_HOME=/usr/local/opt/scala/idea
+export M2_HOME=/usr/local/Cellar/maven/3.3.3/libexec
 
 # Docker
 # ------
