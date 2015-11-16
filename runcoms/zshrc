@@ -14,18 +14,26 @@ autoload -U compinit
 compinit
 . `brew --prefix`/etc/profile.d/z.sh
 # Customize to your needs...
+autoload -U +X bashcompinit && bashcompinit
+eval "$(stack --bash-completion-script "$(which stack)")"
 
 # PATH and other system-wide env var
 # ==================================
 
 # - about $path in zsh http://j.mp/1aHdLxH
 typeset -U path
-path=($HOME/bin
-    $HOME/anaconda/bin
+path=(
+    $HOME/anaconda/bin  # GOOD: overwrite system python. BAD: sqlite3 in anaconda is bad
     /usr/local/bin
     /Library/TeX/texbin
+    /Applications/Postgres.app/Contents/Versions/9.4/bin
+    $HOME/bin
+    $HOME/bin/searchtobibtex
+    $HOME/.local/bin
+    $HOME/Library/Haskell/bin
+    /Applications/Skim.app/Contents/SharedSupport  # displayline, skimnotes, and skimpdf
     $path)
-export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin:$HOME/Library/Haskell/bin
+#python3 $HOME/anaconda/envs/python3/bin
 export EDITOR=vim
 export VISUAL=vim
 
@@ -39,7 +47,7 @@ export HS2D=$HOME'/hive-workspace/hs2driver'
 export HS2=$HOME'/hive-workspace/hive/service/src/java/org/apache/hive/service/server'
 export DCUBE=$HOME'/Dropbox/Projects/domcube-src'
 export HS2HOME=/Users/xiaom/hive-workspace/hive/packaging/target/apache-hive-2.0.0-SNAPSHOT-bin/apache-hive-2.0.0-SNAPSHOT-bin
-
+export RAML=$HOME'/Dropbox/projects/raml-apis'
 # Alias for OS X Management
 # =========================
 alias CleanDupOpenWith="/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
@@ -67,9 +75,10 @@ alias GenRandMac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
 alias vi='/Applications/MacVim.app/Contents/MacOS/Vim'
 alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 alias em='open -a Emacs'
+alias emc='emacsclient --no-wait'
 alias gl='git lg | less'
-
-
+alias sql=$(brew list sqlite | grep 'bin/sqlite3')
+alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 
 # Hadoop
 # ------
