@@ -71,3 +71,15 @@ if [[ ! -d "$TMPDIR" ]]; then
 fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
+
+# - about $path in zsh http://j.mp/1aHdLxH
+typeset -U path
+path=(
+    $HOME/anaconda/bin  # GOOD: overwrite system python. BAD: sqlite3 in anaconda is bad
+    /Library/TeX/texbin
+    /Applications/Postgres.app/Contents/Versions/9.4/bin
+    $HOME/bin
+    $HOME/bin/searchtobibtex
+    $HOME/.local/bin
+    /Applications/Skim.app/Contents/SharedSupport  # displayline, skimnotes, and skimpdf
+    $path)

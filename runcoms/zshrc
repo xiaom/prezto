@@ -17,37 +17,32 @@ compinit
 autoload -U +X bashcompinit && bashcompinit
 eval "$(stack --bash-completion-script "$(which stack)")"
 
-# PATH and other system-wide env var
-# ==================================
-
-# - about $path in zsh http://j.mp/1aHdLxH
-typeset -U path
-path=(
-    $HOME/anaconda/bin  # GOOD: overwrite system python. BAD: sqlite3 in anaconda is bad
-    /usr/local/bin
-    /Library/TeX/texbin
-    /Applications/Postgres.app/Contents/Versions/9.4/bin
-    $HOME/bin
-    $HOME/bin/searchtobibtex
-    $HOME/.local/bin
-    $HOME/Library/Haskell/bin
-    /Applications/Skim.app/Contents/SharedSupport  # displayline, skimnotes, and skimpdf
-    $path)
-#python3 $HOME/anaconda/envs/python3/bin
 export EDITOR=vim
 export VISUAL=vim
 
 # Bookmark for directories
 # ========================
-export DRCLI=$HOME'/drill-workspace/drill/contrib/native/client'
 export DR=$HOME'/drill-workspace/drill/'
+export DP=$HOME'/Dropbox/projects'
 export DE=$HOME'/Dropbox/projects/depth-exam'
+export P=$DP'/proposal'
 export HV=$HOME'/hive-workspace/hive'
-export HS2D=$HOME'/hive-workspace/hs2driver'
-export HS2=$HOME'/hive-workspace/hive/service/src/java/org/apache/hive/service/server'
-export DCUBE=$HOME'/Dropbox/Projects/domcube-src'
-export HS2HOME=/Users/xiaom/hive-workspace/hive/packaging/target/apache-hive-2.0.0-SNAPSHOT-bin/apache-hive-2.0.0-SNAPSHOT-bin
-export RAML=$HOME'/Dropbox/projects/raml-apis'
+# export DRCLI=$HOME'/drill-workspace/drill/contrib/native/client'
+# export HS2D=$HOME'/hive-workspace/hs2driver'
+# export HS2=$HOME'/hive-workspace/hive/service/src/java/org/apache/hive/service/server'
+# export DCUBE=$HOME'/Dropbox/Projects/domcube-src'
+# export HS2HOME=/Users/xiaom/hive-workspace/hive/packaging/target/apache-hive-2.0.0-SNAPSHOT-bin/apache-hive-2.0.0-SNAPSHOT-bin
+# export RAML=$HOME'/Dropbox/projects/raml-apis'
+export R=$HOME'/research'
+
+
+tufte() {
+  pandoc -s -S --toc -c tufte-css/tufte.css $1.org -o $1.html;
+}
+marked() {
+  pandoc -s -S --toc -c $1 $1.org -o $1.html;
+}
+
 # Alias for OS X Management
 # =========================
 alias CleanDupOpenWith="/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
@@ -74,25 +69,33 @@ alias GenRandMac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
 # ==============
 alias vi='/Applications/MacVim.app/Contents/MacOS/Vim'
 alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+
+# `open -a Emacs` seems smart enough to choose opening with emacsclient.
+# function open_with_emacs () {
+#     emacsclient --no-wait $1
+#     # http://www.bash2zsh.com/zsh_refcard/refcard.pdf
+#     if [[ $? -ne 0 ]]; then
+#         open -a Emacs $1
+#     fi;
+# }
 alias em='open -a Emacs'
-alias emc='emacsclient --no-wait'
 alias gl='git lg | less'
 alias sql=$(brew list sqlite | grep 'bin/sqlite3')
 alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 
 # Hadoop
 # ------
-export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 export SCALA_HOME=/usr/local/opt/scala/idea
-export M2_HOME=/usr/local/Cellar/maven/3.3.3/libexec
+export M2_HOME=/usr/local/Cellar/maven/3.3.9/libexec
 
 # Docker
 # ------
 
 # - ENV by Boot2Docker
-export DOCKER_HOST=tcp://192.168.59.103:2376
-export DOCKER_CERT_PATH=/Users/xiaom/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=1
+#export DOCKER_HOST=tcp://192.168.59.103:2376
+#export DOCKER_CERT_PATH=/Users/xiaom/.boot2docker/certs/boot2docker-vm
+#export DOCKER_TLS_VERIFY=1
 
 # - get latest container ID
 alias dl="docker ps -l -q"
