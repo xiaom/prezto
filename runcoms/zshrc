@@ -27,6 +27,8 @@ export DP=$HOME'/Dropbox/projects'
 export DE=$HOME'/Dropbox/projects/depth-exam'
 export P=$DP'/proposal'
 export HV=$HOME'/hive-workspace/hive'
+export LC=$DP'/polystore'
+# alias sqlite='/usr/local/Cellar/sqlite/3.10.1/bin/sqlite3'
 # export DRCLI=$HOME'/drill-workspace/drill/contrib/native/client'
 # export HS2D=$HOME'/hive-workspace/hs2driver'
 # export HS2=$HOME'/hive-workspace/hive/service/src/java/org/apache/hive/service/server'
@@ -43,12 +45,12 @@ marked() {
   pandoc -s -S --toc -c $1 $1.org -o $1.html;
 }
 
+alias ShowHTTP="nmap -sV --script=http-enum localhost"
 # Alias for OS X Management
 # =========================
 alias CleanDupOpenWith="/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
 
 # http://www.makeuseof.com/tag/these-6-awesome-terminal-commands-will-boost-your-macbook/
-
 alias ShowDock="defaults write com.apple.dashboard mcx-disabled -boolean YES && killall Dock"
 alias HideDock="defaults write com.apple.dashboard mcx-disabled -boolean NO && killall Dock"
 alias HideDesktopIcons="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
@@ -70,24 +72,33 @@ alias GenRandMac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
 alias vi='/Applications/MacVim.app/Contents/MacOS/Vim'
 alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 
-# `open -a Emacs` seems smart enough to choose opening with emacsclient.
-# function open_with_emacs () {
-#     emacsclient --no-wait $1
-#     # http://www.bash2zsh.com/zsh_refcard/refcard.pdf
-#     if [[ $? -ne 0 ]]; then
-#         open -a Emacs $1
-#     fi;
-# }
-alias em='open -a Emacs'
+function open_with_emacs () {
+    open -a Emacs $1
+    # http://www.bash2zsh.com/zsh_refcard/refcard.pdf
+    if [[ $? -ne 0 ]]; then
+        touch $1
+        open -a Emacs $1
+    fi;
+}
+alias em='open_with_emacs'
+alias emc='open_with_emacs'
 alias gl='git lg | less'
 alias sql=$(brew list sqlite | grep 'bin/sqlite3')
 alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 
+function open_localhost_with_port () {
+   open http://localhost:$1
+}
+alias ol='open_localhost_with_port'
+
 # Hadoop
 # ------
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export GROOVY_HOME=/usr/local/opt/groovy/libexec
 export SCALA_HOME=/usr/local/opt/scala/idea
 export M2_HOME=/usr/local/Cellar/maven/3.3.9/libexec
+export SPARK_HOME='/usr/local/Cellar/apache-spark/1.6.0/libexec'
+export SK=$SPARK_HOME'/libexec/sbin'
 
 # Docker
 # ------
@@ -122,3 +133,5 @@ dbu() { docker build -t=$1 .; }
 # - show all alias related docker
 dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
 
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

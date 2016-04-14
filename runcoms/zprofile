@@ -83,3 +83,4 @@ path=(
     $HOME/.local/bin
     /Applications/Skim.app/Contents/SharedSupport  # displayline, skimnotes, and skimpdf
     $path)
+source /usr/local/opt/autoenv/activate.sh
