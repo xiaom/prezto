@@ -45,7 +45,20 @@ marked() {
   pandoc -s -S --toc -c $1 $1.org -o $1.html;
 }
 
-alias ShowHTTP="nmap -sV --script=http-enum localhost"
+export SQL_SHOW_TCP="\
+SELECT \
+L.pid, L.port, P.cmdline \
+FROM \
+listening_ports L , etc_protocols E, processes P  \
+WHERE \
+L.protocol = E.number and \
+L.pid = P.pid and \
+E.name = \"tcp\" \
+"
+alias ShowTCP='osqueryi "$SQL_SHOW_TCP"; echo $SQL_SHOW_TCP'
+# -sV: Probe open ports to determine service/version info
+alias ShowHTTP="nmap -sV localhost"
+alias ShowHTTPDetail="nmap -sV --script=http-enum localhost"
 # Alias for OS X Management
 # =========================
 alias CleanDupOpenWith="/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -domain local -domain system -domain user"
@@ -61,6 +74,58 @@ alias HideApptivateMenuBar="defaults write se.cocoabeans.apptivate TAShowStatusb
 alias ShowIP="ifconfig en0 | awk '/inet / {print $2}'"
 alias TurnOffSpotlight="sudo mdutil -a -i off"
 alias TurnOnSpotlight="sudo mdutil -a -i on"
+alias TurnOnWiFi="networksetup -setairportpower en0 on"
+alias TurnOffWiFi="networksetup -setairportpower en0 off"
+# ----------------
+# Self Control
+# ----------------
+# [Read the settings]
+# defaults read org.eyebeam.SelfControl
+#
+# [Set the block length and interval]
+# defaults write org.eyebeam.SelfControl MaxBlockLength -int [maximum block length in minutes]
+# defaults write org.eyebeam.SelfControl BlockLengthInterval -int [block length interval in minutes]
+alias SelfControlDays="defaults write org.eyebeam.SelfControl MaxBlockLength -int 720"
+alias SelfControlIntervals="defaults write org.eyebeam.SelfControl BlockLengthInterval -int 25"
+
+alias SelfControlSet="defaults write org.eyebeam.SelfControl BlockDuration -int 1"
+Whitelist(){
+    defaults write org.eyebeam.SelfControl BlockAsWhitelist -int 1 
+    defaults write org.eyebeam.SelfControl HostBlacklist -array "xiami.com"
+    defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
+	"spotify.com" \
+	"vocabulary.com"  "vocab.com" \
+	"github.com"  "bitbucket.org" \
+	"www.evernote.com" \
+	"amazonaws.com" \
+	"coffitivity.com" \
+	"icloud.com" \
+	# Google and Google Remote
+     defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
+	"google.com" \
+	"199.212.24.18" \
+	"googleusercontent.com" \
+	"1e100.net"
+	# Dropbox
+    defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
+	"dropbox.com" \
+	"199.47.216.0/24" \
+	"108.160.160.0/20" \
+	"205.189.0.0/24" \
+	"199.47.216.0/24"
+    # SFU
+    defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
+	"sfu.ca" \
+	"search.lib.sfu.ca" \
+	"proxy.lib.sfu.ca" \
+	"login.proxy.lib.sfu.ca"
+	# Research Paper
+    defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
+	"acm.org" \
+	"vldb.org"
+}
+
+alias SelfControlStart="sudo /Applications/SelfControl.app/Contents/MacOS/org.eyebeam.SelfControl $(id -u $(whoami)) --install"
 alias DisableAWDL="ifconfig awdl0 down"
 alias GenRandMac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
 
