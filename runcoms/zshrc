@@ -85,47 +85,73 @@ alias TurnOffWiFi="networksetup -setairportpower en0 off"
 # [Set the block length and interval]
 # defaults write org.eyebeam.SelfControl MaxBlockLength -int [maximum block length in minutes]
 # defaults write org.eyebeam.SelfControl BlockLengthInterval -int [block length interval in minutes]
-alias SelfControlDays="defaults write org.eyebeam.SelfControl MaxBlockLength -int 720"
-alias SelfControlIntervals="defaults write org.eyebeam.SelfControl BlockLengthInterval -int 25"
-
-alias SelfControlSet="defaults write org.eyebeam.SelfControl BlockDuration -int 1"
-Whitelist(){
-    defaults write org.eyebeam.SelfControl BlockAsWhitelist -int 1 
-    defaults write org.eyebeam.SelfControl HostBlacklist -array "xiami.com"
-    defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
-	"spotify.com" \
-	"vocabulary.com"  "vocab.com" \
-	"github.com"  "bitbucket.org" \
-	"www.evernote.com" \
-	"amazonaws.com" \
-	"coffitivity.com" \
-	"icloud.com" \
-	# Google and Google Remote
-     defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
-	"google.com" \
-	"199.212.24.18" \
-	"googleusercontent.com" \
-	"1e100.net"
-	# Dropbox
-    defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
-	"dropbox.com" \
-	"199.47.216.0/24" \
-	"108.160.160.0/20" \
-	"205.189.0.0/24" \
-	"199.47.216.0/24"
-    # SFU
-    defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
-	"sfu.ca" \
-	"search.lib.sfu.ca" \
-	"proxy.lib.sfu.ca" \
-	"login.proxy.lib.sfu.ca"
-	# Research Paper
-    defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
-	"acm.org" \
-	"vldb.org"
-}
-
-alias SelfControlStart="sudo /Applications/SelfControl.app/Contents/MacOS/org.eyebeam.SelfControl $(id -u $(whoami)) --install"
+#
+# === Comment due to wired stuffs  ===
+# alias SelfControlDays="defaults write org.eyebeam.SelfControl MaxBlockLength -int 720"
+# alias SelfControlIntervals="defaults write org.eyebeam.SelfControl BlockLengthInterval -int 25"
+# 
+# BaseWhitelist(){
+#     defaults write org.eyebeam.SelfControl BlockAsWhitelist -int 1 
+#     defaults write org.eyebeam.SelfControl HostBlacklist -array "xiami.com" "www.noisli.com"
+# }
+# 
+# SetWhitelist(){
+#     BaseWhitelist
+#     defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
+#     "debuggex.com"
+#     defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
+# 	"spotify.com" \
+# 	"vocabulary.com"  "vocab.com" \
+# 	"github.com"  "bitbucket.org" \
+# 	"www.evernote.com" \
+# 	"coffitivity.com" 
+# 	# Google Remote
+#      defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
+# 	"199.212.24.18" \
+# 	"googleusercontent.com" \
+# 	"1e100.net"
+# 	# Dropbox and iCloud
+#     defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
+# 	"icloud.com" \
+# 	"dropbox.com" \
+#     "thunder.v.dropbox.com" \
+#     "beacon.v.dropbox.com" \
+#     "harmony.v.dropbox.com" \
+#     "bolt.v.dropbox.com" \
+#     "dl-doc-duc-balancer.x.dropbox.com" \
+#     "photos-thumb-spdy.x.dropbox.com" \
+#     "dl-doc-balancer.x.dropbox.com" \
+# 	"199.47.216.0/24" \
+# 	"108.160.160.0/20" \
+# 	"205.189.0.0/24" \
+# 	"199.47.216.0/24" 
+#     # SFU
+#     defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
+# 	"sfu.ca" \
+# 	"search.lib.sfu.ca" \
+# 	"proxy.lib.sfu.ca" \
+# 	"login.proxy.lib.sfu.ca"
+# 	# Research Paper
+#     defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
+#     "google.ca" \
+#     "google.com" \
+# 	"mail.google.com" \
+# 	"acm.org" \
+# 	"vldb.org"
+#     defaults write org.eyebeam.SelfControl HostBlacklist -array-add \
+#     "ec2-54-243-252-100.compute-1.amazonaws.com" # Dayone
+# }
+# SelfControlTest() {
+#     SetWhitelist
+#     sudo /Applications/SelfControl.app/Contents/MacOS/org.eyebeam.SelfControl $(id -u $(whoami)) --install
+# }
+# SelfControlStart() {
+#     defaults write org.eyebeam.SelfControl BlockLengthInterval -int 25
+#     defaults write org.eyebeam.SelfControl BlockDuration -int 25
+#     SetWhitelist
+#     sudo /Applications/SelfControl.app/Contents/MacOS/org.eyebeam.SelfControl $(id -u $(whoami)) --install
+# }
+# 
 alias DisableAWDL="ifconfig awdl0 down"
 alias GenRandMac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
 
@@ -197,6 +223,5 @@ dbu() { docker build -t=$1 .; }
 
 # - show all alias related docker
 dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
-
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
