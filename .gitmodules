@@ -1,6 +1,3 @@
-[submodule "modules/autosuggestions/external"]
-	path = modules/autosuggestions/external
-	url = https://github.com/zsh-users/zsh-autosuggestions
 [submodule "modules/history-substring-search/external"]
 	path = modules/history-substring-search/external
 	url = https://github.com/zsh-users/zsh-history-substring-search.git
@@ -19,3 +16,6 @@
 [submodule "modules/prompt/functions/pure"]
 	path = modules/prompt/external/pure
 	url = https://github.com/sindresorhus/pure.git
+[submodule "modules/autosuggestions/external"]
+	path = modules/autosuggestions/external
+	url = https://github.com/zsh-users/zsh-autosuggestions

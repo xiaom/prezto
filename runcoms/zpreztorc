@@ -1,4 +1,4 @@
-#
+
 # Sets Prezto options.
 #
 # Authors:
@@ -29,21 +29,19 @@ zstyle ':prezto:load' pmodule \
   'editor' \
   'history' \
   'directory' \
-  'spectrum' \
   'utility' \
   'completion' \
   'history-substring-search' \
   'syntax-highlighting' \
+  'python' \
   'osx' \
   'git' \
-  'autosuggestions' \
-  'python' \
   'fasd' \
   'prompt'
 
 #
 # Autosuggestions
-#
+# - disabled since it is distracting
 
 zstyle ':prezto:module:autosuggestions' color 'yes'
 # Set the query found color.
@@ -101,7 +99,7 @@ zstyle ':prezto:module:editor' dot-expansion 'yes'
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
 #zstyle ':prezto:module:prompt' theme 'sorin'
-zstyle ':prezto:module:prompt' theme 'pure'
+zstyle ':prezto:module:prompt' theme 'purex'
 
 #
 # Ruby
